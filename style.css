@@ -1,12 +1,114 @@
-body { font-family: Arial, sans-serif; background: #f8f8f8; margin:0; padding:0; }
-header { display:flex; justify-content:space-between; padding:20px; background:#ffdd57; }
-h1,h2,h3 { margin:0 0 10px 0; }
-input, select, button { margin:5px; padding:8px; border-radius:5px; border:1px solid #ccc; }
-button { cursor:pointer; }
-.products-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:15px; margin-top:10px; }
-.product-card { background:#fff; padding:10px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:center; }
-.acc-product { background:#fff; margin:5px; padding:10px; border-radius:10px; box-shadow:0 2px 6px rgba(0,0,0,0.1); }
-.toast { position:fixed; top:20px; right:20px; padding:10px 20px; border-radius:5px; color:#fff; margin-bottom:5px; opacity:0.9; }
-.toast-success{background:#28a745;}
-.toast-error{background:#dc3545;}
-.toast-warning{background:#ffc107;color:#000;}
+/* --- Основні налаштування --- */
+body {
+  font-family: 'Roboto', sans-serif;
+  background: #1a1a1a;
+  color: #ffffff;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- Header --- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #111111;
+  border-bottom: 2px solid #2e9afe;
+}
+
+header h1 {
+  color: #2e9afe;
+  margin: 0;
+}
+
+header span, header button {
+  color: #ffffff;
+}
+
+/* --- Inputs та кнопки --- */
+input, select {
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #444;
+  background: #222;
+  color: #fff;
+}
+
+button {
+  background: #2e9afe;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1b6fb2;
+}
+
+/* --- Секції --- */
+section {
+  padding: 20px;
+}
+
+/* --- Грід товарів --- */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* --- Карточки товарів --- */
+.product-card {
+  background: #1f1f1f;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+/* --- Мій акаунт --- */
+.acc-product {
+  background: #1f1f1f;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- Toast повідомлення --- */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: #fff;
+  margin-bottom: 5px;
+  opacity: 0.95;
+  font-weight: bold;
+}
+
+.toast-success { background: #2e9afe; }
+.toast-error { background: #dc3545; }
+.toast-warning { background: #ffc107; color: #000; }
+
+/* --- Адаптивність --- */
+@media (max-width: 600px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+}
