@@ -1,91 +1,56 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LeonLogo7777</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="UTF-8">
+  <title>Мільйонний сайт</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <nav>
-      <ul>
-        <li><a href="#home">Головна</a></li>
-        <li><a href="#logos-section">Логотипи</a></li>
-        <li><a href="#wallpapers-section">Обої</a></li>
-        <li><a href="#themes-section">Теми</a></li>
-        <li><a href="#dashboard">Кабінет</a></li>
-        <li><a href="#contacts">Контакти</a></li>
-      </ul>
-    </nav>
+    <h1>Мій Магазин</h1>
+    <div>
+      <span id="user-email">Гість</span> | Баланс: $<span id="balance">0</span>
+      <button id="logout" style="display:none;">Вийти</button>
+    </div>
   </header>
 
-  <section id="home" class="hero">
-    <h1>LeonLogo7777</h1>
-    <p>Переглядай логотипи, обої та теми, завантажуй свої роботи та купуй улюблені дизайни.</p>
-    <button id="start-btn">Почати</button>
+  <section id="auth-section">
+    <input id="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Пароль">
+    <button id="signup-btn">Реєстрація</button>
+    <button id="login-btn">Вхід</button>
   </section>
 
-  <section id="logos-section">
-    <h2>Логотипи</h2>
-    <div id="logos" class="products-container"></div>
+  <section id="add-product-section" style="display:none;">
+    <h2>Додати товар</h2>
+    <input id="product-name" placeholder="Назва">
+    <input id="product-price" placeholder="Ціна">
+    <input id="product-image" placeholder="URL зображення">
+    <select id="product-type">
+      <option value="logo">Логотип</option>
+      <option value="wallpaper">Обої</option>
+      <option value="theme">Тема</option>
+    </select>
+    <button id="add-product-btn">Додати товар</button>
   </section>
 
-  <section id="wallpapers-section">
-    <h2>Обої</h2>
-    <div id="wallpapers" class="products-container"></div>
+  <section id="products-section">
+    <h2>Товари</h2>
+    <div id="products" class="products-grid"></div>
   </section>
 
-  <section id="themes-section">
-    <h2>Теми</h2>
-    <div id="themes" class="products-container"></div>
+  <section id="account-section" style="display:none;">
+    <h2>Мій акаунт</h2>
+    <p>Email: <span id="acc-email"></span></p>
+    <p>Баланс: $<span id="acc-balance"></span></p>
+    <h3>Історія покупок</h3>
+    <div id="acc-purchases-list"></div>
+    <h3>Мої товари</h3>
+    <div id="acc-products"></div>
   </section>
 
-  <section id="dashboard">
-    <h2>Кабінет</h2>
+  <div id="toast-container"></div>
 
-    <div class="auth-row">
-      <input id="email" type="email" placeholder="Email"/>
-      <input id="password" type="password" placeholder="Пароль"/>
-      <button id="signup-btn">Реєстрація</button>
-      <button id="login-btn">Вхід</button>
-      <button id="logout" style="display:none">Вийти</button>
-      <span id="user-email">Гість</span>
-    </div>
-
-    <div class="balance-row">Баланс: $<span id="balance">0</span></div>
-
-    <div id="add-balance-section" style="display:none">
-      <input id="balance-amount" type="number" placeholder="Сума"/>
-      <button id="add-balance-btn">Поповнити баланс</button>
-      <button id="withdraw-balance-btn">Вивести гроші</button>
-    </div>
-
-    <div id="add-product-section" style="display:none">
-      <input id="product-name" placeholder="Назва продукту"/>
-      <input id="product-price" type="number" placeholder="Ціна"/>
-      <input id="product-image" placeholder="URL картинки"/>
-      <select id="product-type">
-        <option value="logo">Логотип</option>
-        <option value="wallpaper">Обої</option>
-        <option value="theme">Тема</option>
-      </select>
-      <button id="add-product-btn">Додати продукт</button>
-    </div>
-
-    <div id="purchase-history"></div>
-  </section>
-
-  <section id="contacts">
-    <h2>Контакти</h2>
-    <p>Напишіть нам: <a href="mailto:email@example.com">email@example.com</a></p>
-  </section>
-
-  <footer>
-    <p>© 2025 LeonLogo7777 — Всі права захищені</p>
-  </footer>
-
-  <div id="toast-container" class="toast-container"></div>
   <script src="script.js"></script>
 </body>
 </html>
