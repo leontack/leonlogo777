@@ -85,7 +85,18 @@ function saveProducts(products){ localStorage.setItem('products', JSON.stringify
 function loadProducts(){
   const container = document.getElementById('products');
   container.innerHTML = '';
-  const products = getProducts();
+  let products = getProducts();
+
+  if(products.length === 0){
+    const demoProducts = [
+      {name:"Demo Logo", price:100, image:"assets/logos/logo1.png", type:"logo", seller:"Admin"},
+      {name:"Demo Wallpaper", price:50, image:"assets/wallpapers/wallpaper1.jpg", type:"wallpaper", seller:"Admin"},
+      {name:"Demo Theme", price:70, image:"assets/themes/theme1.jpg", type:"theme", seller:"Admin"}
+    ];
+    demoProducts.forEach(p=>products.push(p));
+    saveProducts(products);
+  }
+
   products.forEach((p, idx)=>{
     const card = document.createElement('div');
     card.className = 'product-card';
@@ -137,4 +148,80 @@ function savePurchases(purchases){ localStorage.setItem('purchases', JSON.string
 
 function addPurchase(product){
   const purchases = getPurchases();
-  purchases.push({name: product.name,
+  purchases.push({name: product.name, price: product.price, type: product.type, buyer: currentUser, date: new Date().toISOString()});
+  savePurchases(purchases);
+  renderAccount();
+}
+
+// --- Розділ Мій акаунт ---
+function renderAccount(){
+  const section = document.getElementById('account-section');
+  if(!currentUser){ section.style.display='none'; return; }
+  section.style.display='block';
+  document.getElementById('acc-email').innerText = currentUser;
+  document.getElementById('acc-balance').innerText = balance.toFixed(2);
+
+  const history = document.getElementById('acc-purchases-list');
+  const purchases = getPurchases().filter(p=>p.buyer===currentUser);
+  history.innerHTML = '';
+  purchases.forEach(p=>{
+    const div = document.createElement('div');
+    div.innerText = `${p.name} - $${p.price} (${p.type}) - ${new Date(p.date).toLocaleString()}`;
+    history.appendChild(div);
+  });
+
+  const myProducts = getProducts().filter(p=>p.seller===currentUser);
+  const container = document.getElementById('acc-products');
+  container.innerHTML = '';
+  myProducts.forEach((prod, idx)=>{
+    const div = document.createElement('div');
+    div.className = 'acc-product';
+    div.innerHTML = `
+      <img src="${prod.image}" alt="${prod.name}" width="100" style="border-radius:8px;">
+      <p>${prod.name} — $${prod.price} (${prod.type})</p>
+      <button class="edit-btn" data-index="${idx}">Редагувати</button>
+      <button class="delete-btn" data-index="${idx}">Видалити</button>
+    `;
+    container.appendChild(div);
+  });
+
+  container.querySelectorAll('.edit-btn').forEach(btn=>{
+    btn.addEventListener('click', e=> editProduct(Number(e.currentTarget.dataset.index)));
+  });
+
+  container.querySelectorAll('.delete-btn').forEach(btn=>{
+    btn.addEventListener('click', e=> deleteProduct(Number(e.currentTarget.dataset.index)));
+  });
+}
+
+// --- Редагування та видалення ---
+function editProduct(idx){
+  const products = getProducts().filter(p=>p.seller===currentUser);
+  const product = products[idx];
+  if(!product) return;
+  const newName = prompt("Нова назва:", product.name);
+  const newPrice = prompt("Нова ціна:", product.price);
+  const newImage = prompt("Нова картинка (URL):", product.image);
+  const newType = prompt("Нова категорія (logo/wallpaper/theme):", product.type);
+
+  if(newName) product.name = newName;
+  if(newPrice && !isNaN(newPrice)) product.price = parseFloat(newPrice);
+  if(newImage) product.image = newImage;
+  if(newType) product.type = newType;
+
+  const allProducts = getProducts();
+  const idxAll = allProducts.findIndex(p=>p.seller===currentUser && p.name===product.name);
+  if(idxAll!==-1){ allProducts[idxAll]=product; saveProducts(allProducts); }
+
+  updateUI();
+  showToast("Товар оновлено!", "success");
+}
+
+function deleteProduct(idx){
+  const allProducts = getProducts();
+  const products = allProducts.filter(p=>p.seller===currentUser);
+  const prodToDelete = products[idx];
+  const filtered = allProducts.filter(p=>!(p.seller===currentUser && p.name===prodToDelete.name));
+  saveProducts(filtered);
+  updateUI();
+  showToast("Товар видалено!", "warning");
